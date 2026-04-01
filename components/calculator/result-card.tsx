@@ -5,14 +5,12 @@ import { cn } from "@/lib/utils"
 export type SeverityLevel = "low" | "moderate" | "high" | "critical"
 
 interface ResultCardProps {
-  title: string
   score: number | string
   severity: SeverityLevel
   interpretation: string
   severityLabel?: string
   details?: { label: string; value: string | number }[]
   className?: string
-  compact?: boolean
 }
 
 const severityStyles: Record<SeverityLevel, { bg: string; text: string; badge: string }> = {
@@ -39,61 +37,66 @@ const severityStyles: Record<SeverityLevel, { bg: string; text: string; badge: s
 }
 
 export function ResultCard({
-  title,
   score,
   severity,
   severityLabel,
   interpretation,
   details,
   className,
-  compact = false,
 }: ResultCardProps) {
-  const styles = severityStyles[severity]
+  const severityColors: Record<string, string> = {
+    low: "text-[var(--severity-low)] bg-[var(--severity-low)]/10 ring-[var(--severity-low)]/20",
+    moderate: "text-[var(--severity-moderate)] bg-[var(--severity-moderate)]/10 ring-[var(--severity-moderate)]/20",
+    high: "text-[var(--severity-high)] bg-[var(--severity-high)]/10 ring-[var(--severity-high)]/20",
+    critical: "text-[var(--severity-critical)] bg-[var(--severity-critical)]/10 ring-[var(--severity-critical)]/20",
+  }
 
   return (
-    <div
-      className={cn(
-        "rounded-lg border p-4 w-full flex flex-col min-w-0 break-words whitespace-normal",
-        styles.bg,
-        className
-      )}
-    >
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="space-y-1 min-w-0 flex-1">
-          <p className="text-sm font-medium text-muted-foreground break-words whitespace-normal min-w-0">{title}</p>
-          <p className={cn("text-3xl font-bold break-words whitespace-normal min-w-0", styles.text)}>
-            {typeof score === "number" ? score.toFixed(1) : score}
-          </p>
-        </div>
-        {!compact && severityLabel && (
-          <span
-            className={cn(
-              "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold",
-              styles.badge
-            )}
-          >
-            {severityLabel}
-          </span>
-        )}
-      </div>
-
-      {!compact && <p className={cn("mt-3 text-sm", styles.text)}>{interpretation}</p>}
-
-      {details && details.length > 0 && (
-        <div className="mt-4 space-y-1.5 border-t border-current/10 pt-3">
-          {details.map((detail, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between text-sm"
-            >
-              <span className="text-muted-foreground">{detail.label}</span>
-              <span className={cn("font-medium", styles.text)}>
-                {detail.value}
-              </span>
+    <div className={cn("overflow-hidden rounded-3xl border border-white/5 bg-white/[0.01] shadow-2xl transition-all hover:bg-white/[0.02]", className)}>
+      <div className="flex flex-col md:flex-row md:items-stretch divide-y md:divide-y-0 md:divide-x divide-white/5">
+        {/* Score Header */}
+        <div className="flex flex-col items-center justify-center p-6 md:w-[220px] bg-primary/[0.02]">
+          <span className="text-[9px] font-black uppercase tracking-[0.25em] text-muted-foreground/40 mb-2">Result Score</span>
+          <div className="text-5xl font-black tracking-tighter text-primary drop-shadow-[0_0_12px_rgba(163,255,18,0.25)]">
+            {score}
+          </div>
+          {severityLabel && (
+            <div className={cn(
+              "mt-3 inline-flex items-center rounded-full px-3 py-1 text-[8px] font-black uppercase tracking-widest ring-1",
+              severityColors[severity || "low"]
+            )}>
+              {severityLabel}
             </div>
-          ))}
+          )}
         </div>
-      )}
+
+        {/* Interpretation & Details */}
+        <div className="flex-1 p-6 space-y-5 bg-white/[0.005]">
+          {interpretation && (
+            <div className="space-y-1.5">
+              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/30">Interpretation</span>
+              <p className="text-base font-bold leading-snug text-foreground/90">
+                {interpretation}
+              </p>
+            </div>
+          )}
+
+          {details && details.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              {details.map((detail, index) => (
+                <div key={index} className="flex flex-col rounded-xl bg-white/[0.02] p-3 ring-1 ring-white/5">
+                  <span className="text-[8px] font-black uppercase tracking-wider text-muted-foreground/40 mb-0.5">
+                    {detail.label}
+                  </span>
+                  <span className="text-xs font-bold text-foreground">
+                    {detail.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   )
 }

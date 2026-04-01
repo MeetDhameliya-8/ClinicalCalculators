@@ -1,18 +1,10 @@
-"use client"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { 
   Activity, 
   Beaker, 
-  Brain, 
   Droplets, 
   FlaskConical, 
   Heart, 
-  Pill,
   Stethoscope,
-  X
 } from "lucide-react"
 
 export interface Calculator {
@@ -59,98 +51,11 @@ export const calculators: Calculator[] = [
   { id: "harvey-bradshaw", name: "Harvey-Bradshaw Index", shortName: "HBI", category: "IBD", description: "Crohn's disease activity" },
 ]
 
-const categoryIcons: Record<string, React.ElementType> = {
+export const categoryIcons: Record<string, React.ElementType> = {
   "Liver Disease": Activity,
   "Fibrosis": FlaskConical,
   "Alcoholic Hepatitis": Droplets,
   "GI Bleeding": Heart,
   "Pancreatitis": Beaker,
   "IBD": Stethoscope,
-}
-
-interface CalculatorSidebarProps {
-  selectedCalculator: string
-  onSelectCalculator: (id: string) => void
-  isOpen: boolean
-  onClose: () => void
-}
-
-export function CalculatorSidebar({
-  selectedCalculator,
-  onSelectCalculator,
-  isOpen,
-  onClose,
-}: CalculatorSidebarProps) {
-  const categories = Array.from(new Set(calculators.map((c) => c.category)))
-
-  return (
-    <>
-      {/* Mobile overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
-          onClick={onClose}
-        />
-      )}
-
-      {/* Sidebar */}
-      <aside
-        className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 transform border-r border-border bg-card transition-transform duration-300 lg:relative lg:translate-x-0",
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        )}
-      >
-        <div className="flex h-16 items-center justify-between border-b border-border px-4 lg:hidden">
-          <span className="font-semibold text-foreground">Calculators</span>
-          <Button variant="ghost" size="icon" onClick={onClose}>
-            <X className="h-5 w-5" />
-          </Button>
-        </div>
-
-        <ScrollArea className="h-[calc(100vh-4rem)] lg:h-screen">
-          <div className="space-y-6 p-4">
-            {categories.map((category) => {
-              const Icon = categoryIcons[category] || Brain
-              const categoryCalculators = calculators.filter(
-                (c) => c.category === category
-              )
-
-              return (
-                <div key={category}>
-                  <div className="mb-2 flex items-center gap-2 px-2">
-                    <Icon className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      {category}
-                    </span>
-                  </div>
-                  <div className="space-y-1">
-                    {categoryCalculators.map((calc) => (
-                      <button
-                        key={calc.id}
-                        onClick={() => {
-                          onSelectCalculator(calc.id)
-                          onClose()
-                        }}
-                        className={cn(
-                          "w-full rounded-md px-3 py-2 text-left text-sm transition-colors",
-                          selectedCalculator === calc.id
-                            ? "bg-primary text-primary-foreground"
-                            : "text-foreground hover:bg-accent"
-                        )}
-                      >
-                        <span className="font-medium">{calc.shortName || calc.name}</span>
-                        <p className="mt-0.5 text-xs opacity-70 line-clamp-1">
-                          {calc.description}
-                        </p>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </ScrollArea>
-      </aside>
-    </>
-  )
 }

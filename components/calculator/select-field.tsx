@@ -34,7 +34,7 @@ interface SelectFieldProps {
   tooltip?: string
   required?: boolean
   disabled?: boolean
-  showPoints?: boolean
+  className?: string
 }
 
 export function SelectField({
@@ -48,47 +48,58 @@ export function SelectField({
   tooltip,
   required = false,
   disabled = false,
-  showPoints = false,
+  className,
 }: SelectFieldProps) {
-  const actualId = id || label.toLowerCase().replace(/\s+/g, '-')
   return (
-    <div className="space-y-1.5 flex flex-col min-w-0">
-      <div className="flex items-center gap-1.5 min-w-0">
-        <Label htmlFor={actualId} className="text-sm font-medium text-foreground break-words whitespace-normal block min-w-0">
-          {label}
-          {required && <span className="text-destructive ml-0.5">*</span>}
-        </Label>
-        {tooltip && (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Info className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-xs max-w-xs">{tooltip}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        )}
-      </div>
-      <Select value={value} onValueChange={onChange} disabled={disabled}>
-        <SelectTrigger
-          id={actualId}
-          className={cn(
-            "w-full break-words whitespace-normal min-h-[2.5rem] h-auto text-left",
-            error && "border-destructive focus-visible:ring-destructive/50"
+    <div className={cn("space-y-1.5", className)}>
+      <div className="flex items-center justify-between px-0.5">
+        <div className="flex items-center gap-1">
+          <Label
+            htmlFor={id}
+            className="text-[10px] font-black uppercase tracking-[0.12em] text-muted-foreground/70"
+          >
+            {label}
+            {required && <span className="ml-1 text-primary">*</span>}
+          </Label>
+          {tooltip && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Info className="h-3 w-3 text-muted-foreground/40 hover:text-primary transition-colors cursor-help" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-[250px] rounded-xl border-white/10 bg-popover/90 backdrop-blur-md p-3 text-xs leading-relaxed shadow-2xl">
+                  {tooltip}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
-          aria-invalid={!!error}
+        </div>
+      </div>
+      <Select
+        value={value}
+        onValueChange={onChange}
+        disabled={disabled}
+      >
+        <SelectTrigger
+          id={id}
+          className={cn(
+            "h-12 rounded-xl border-white/5 bg-white/[0.02] px-4 text-sm font-bold transition-all hover:bg-white/[0.04] focus:ring-2 focus:ring-primary/10 focus:border-primary/20",
+            error && "border-destructive/40 focus:ring-destructive/10 focus:border-destructive/60"
+          )}
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="rounded-2xl border-white/10 bg-popover/90 backdrop-blur-xl shadow-2xl">
           {options.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
+            <SelectItem 
+              key={option.value} 
+              value={option.value}
+              className="rounded-xl focus:bg-primary/20 focus:text-primary transition-colors text-sm font-medium"
+            >
               <span className="flex items-center gap-2">
                 {option.label}
-                {showPoints && option.points !== undefined && (
-                  <span className="text-xs text-muted-foreground">
+                {option.points !== undefined && (
+                  <span className="text-[10px] font-bold text-muted-foreground/40">
                     ({option.points} pt{option.points !== 1 ? "s" : ""})
                   </span>
                 )}
@@ -98,7 +109,7 @@ export function SelectField({
         </SelectContent>
       </Select>
       {error && (
-        <p id={`${actualId}-error`} className="text-xs text-destructive">
+        <p className="px-1 text-[9px] font-black uppercase tracking-wider text-destructive animate-in fade-in slide-in-from-top-1">
           {error}
         </p>
       )}

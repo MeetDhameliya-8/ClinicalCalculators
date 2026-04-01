@@ -9,15 +9,16 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Info } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 interface ToggleFieldProps {
   id?: string
   label: string
   checked: boolean
   onChange: (checked: boolean) => void
-  tooltip?: string
   disabled?: boolean
-  points?: number
+  tooltip?: string
+  className?: string
 }
 
 export function ToggleField({
@@ -25,39 +26,42 @@ export function ToggleField({
   label,
   checked,
   onChange,
-  tooltip,
   disabled = false,
-  points,
+  tooltip,
+  className,
 }: ToggleFieldProps) {
-  const actualId = id || label.toLowerCase().replace(/\s+/g, '-')
   return (
-    <div className="flex items-center justify-between py-2 min-w-0">
-      <div className="flex items-center gap-1.5 min-w-0">
-        <Label htmlFor={actualId} className="text-sm font-medium text-foreground cursor-pointer break-words whitespace-normal block min-w-0">
+    <div className={cn(
+      "flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:bg-white/[0.04] group",
+      className
+    )}>
+      <div className="flex items-center gap-2">
+        <Label
+          htmlFor={id}
+          className="text-[10px] font-black uppercase tracking-[0.12em] text-muted-foreground/70 group-hover:text-primary transition-colors cursor-pointer"
+        >
           {label}
         </Label>
         {tooltip && (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Info className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
+                <Info className="h-3 w-3 text-muted-foreground/40 hover:text-primary transition-colors cursor-help" />
               </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-xs max-w-xs">{tooltip}</p>
+              <TooltipContent className="max-w-[250px] rounded-xl border-white/10 bg-popover/90 backdrop-blur-md p-3 text-xs leading-relaxed shadow-2xl">
+                {tooltip}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         )}
       </div>
-      <div className="flex items-center gap-2">
-        <span className="text-xs text-muted-foreground">{checked ? "Yes" : "No"}</span>
-        <Switch
-          id={actualId}
-          checked={checked}
-          onCheckedChange={onChange}
-          disabled={disabled}
-        />
-      </div>
+      <Switch
+        id={id}
+        checked={checked}
+        onCheckedChange={onChange}
+        disabled={disabled}
+        className="scale-90 data-[state=checked]:bg-primary data-[state=unchecked]:bg-white/10"
+      />
     </div>
   )
 }

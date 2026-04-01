@@ -1,116 +1,248 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Activity, Menu, X } from "lucide-react"
-import { useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import { Activity, X, ChevronDown, Brain, Menu, FlaskConical, Droplets, Heart, Beaker, Stethoscope } from "lucide-react"
+import { useState, useRef, useEffect } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { calculators, categoryIcons } from "@/lib/calculators-data"
 
 const navLinks = [
   { href: "/", label: "Overview" },
+  { href: "/calculator", label: "Calculator" },
   { href: "/conference", label: "Conference" },
   { href: "/trending", label: "Trending Topics" },
-  { href: "/calculator", label: "Calculator" },
   { href: "/blog", label: "Blog" },
 ]
 
 interface NavbarProps {
-  onMenuClick?: () => void
+  selectedCalculator?: string
+  onSelectCalculator?: (id: string) => void
 }
 
-export function Navbar({ onMenuClick }: NavbarProps = {}) {
+export function Navbar({ selectedCalculator, onSelectCalculator }: NavbarProps) {
   const pathname = usePathname()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const router = useRouter()
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false)
+  const megaMenuRef = useRef<HTMLDivElement>(null)
 
   const isActive = (href: string) => {
-    if (href === "/calculator") {
-      return pathname === "/calculator" || pathname.startsWith("/calculator/")
-    }
+    if (href === "/") return pathname === "/"
+    if (href === "/calculator") return pathname.startsWith("/calculator")
     return pathname === href
   }
 
+  // Handle outside clicks to close mega menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (megaMenuRef.current && !megaMenuRef.current.contains(event.target as Node)) {
+        setIsMegaMenuOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  const handleCalculatorSelect = (id: string) => {
+    setIsMegaMenuOpen(false)
+    setIsMobileMenuOpen(false)
+    if (onSelectCalculator) {
+      onSelectCalculator(id)
+    } else {
+      router.push(`/calculator?id=${id}`)
+    }
+  }
+
+  // Group calculators by category
+  const categories = Array.from(new Set(calculators.map((c) => c.category)))
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <nav className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo and Sidebar Toggle */}
-        <div className="flex items-center gap-2">
-          {onMenuClick && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              onClick={onMenuClick}
-              aria-label="Open calculator menu"
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
-          )}
-          <Link href="/" className="flex items-center gap-2">
-            <Activity className="h-6 w-6 text-primary" />
-            <span className="text-lg font-bold text-foreground">GastroAGI</span>
-          </Link>
-        </div>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex md:items-center md:gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "relative px-3 py-2 text-sm font-medium transition-colors",
-                isActive(link.href)
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              {link.label}
-              {isActive(link.href) && (
-                <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-primary" />
-              )}
+    <nav className="fixed top-0 z-50 w-full border-b border-white/5 bg-background/80 backdrop-blur-xl transition-all">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          <div className="flex items-center gap-8">
+            <Link href="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-90">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/20">
+                <Activity className="h-5.5 w-5.5" />
+              </div>
+              <span className="text-xl font-black tracking-tight text-foreground">GastroAGI</span>
             </Link>
-          ))}
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex md:items-center md:gap-1">
+              {navLinks.map((link) => (
+                <div key={link.href} className="relative">
+                  {link.label === "Calculator" ? (
+                    <button
+                      onClick={() => setIsMegaMenuOpen(!isMegaMenuOpen)}
+                      className={cn(
+                        "group flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-bold tracking-tight transition-all",
+                        isActive(link.href)
+                          ? "text-primary bg-primary/10"
+                          : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                      )}
+                    >
+                      {link.label}
+                      <ChevronDown className={cn(
+                        "h-4 w-4 transition-transform duration-300",
+                        isMegaMenuOpen ? "rotate-180 text-primary" : "text-muted-foreground group-hover:text-foreground"
+                      )} />
+                    </button>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        "rounded-full px-4 py-2 text-sm font-bold tracking-tight transition-all",
+                        isActive(link.href)
+                          ? "text-primary bg-primary/10"
+                          : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary transition-colors">
+              <Brain className="h-5 w-5" />
+            </Button>
+            
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="inline-flex items-center justify-center rounded-xl p-2 text-muted-foreground hover:bg-white/5 hover:text-foreground md:hidden"
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6 animate-in spin-in-90 duration-300" />
+              ) : (
+                <Menu className="h-6 w-6 animate-in slide-in-from-right-4 duration-300" />
+              )}
+            </button>
+          </div>
         </div>
+      </div>
 
-        {/* Mobile Menu Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+      {/* Mega Menu Dropdown */}
+      {isMegaMenuOpen && (
+        <div 
+          ref={megaMenuRef}
+          className="absolute left-1/2 mt-2 w-full max-w-5xl -translate-x-1/2 px-4 animate-in fade-in slide-in-from-top-4 duration-500"
+          style={{ maxHeight: 'calc(100vh - 80px)', overflowY: 'auto' }}
         >
-          {mobileMenuOpen ? (
-            <X className="h-5 w-5" />
-          ) : (
-            <Menu className="h-5 w-5" />
-          )}
-        </Button>
-      </nav>
+          <div className="rounded-[2rem] border border-white/10 bg-popover/90 backdrop-blur-2xl p-8 shadow-2xl">
+            <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
+              {categories.map((category) => (
+                <div key={category} className="space-y-6">
+                  <div className="flex items-center gap-2 border-b border-white/5 pb-3">
+                    {categoryIcons[category] && (
+                      <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                        {(() => {
+                          const Icon = categoryIcons[category]
+                          return <Icon className="h-4 w-4" />
+                        })()}
+                      </div>
+                    )}
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">
+                      {category}
+                    </h3>
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    {calculators
+                      .filter((c) => c.category === category)
+                      .map((calc) => (
+                        <button
+                          key={calc.id}
+                          onClick={() => handleCalculatorSelect(calc.id)}
+                          className={cn(
+                            "flex flex-col items-start rounded-2xl px-4 py-3 text-left transition-all hover:bg-white/5 ring-inset active:scale-95 group",
+                            selectedCalculator === calc.id
+                              ? "bg-primary/10 ring-1 ring-primary/20"
+                              : "hover:ring-1 hover:ring-white/10"
+                          )}
+                        >
+                          <span className={cn(
+                            "text-sm font-bold tracking-tight transition-colors",
+                            selectedCalculator === calc.id ? "text-primary" : "group-hover:text-primary"
+                          )}>
+                            {calc.name}
+                          </span>
+                          <span className="text-[10px] text-muted-foreground leading-tight mt-1 opacity-60 group-hover:opacity-100 transition-opacity">
+                            {calc.description || "Clinical tool assessment"}
+                          </span>
+                        </button>
+                      ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
-      {/* Mobile Navigation */}
-      {mobileMenuOpen && (
-        <div className="border-t bg-background md:hidden">
-          <div className="space-y-1 px-4 py-3">
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden animate-in fade-in slide-in-from-top-10 duration-500">
+          <div className="space-y-1 px-4 pb-3 pt-2 bg-background/95 backdrop-blur-xl border-t border-white/5 h-[calc(100vh-4rem)] overflow-y-auto">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={cn(
-                  "block rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                  isActive(link.href)
-                    ? "bg-primary/10 text-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              <div key={link.href} className="py-1">
+                {link.label === "Calculator" ? (
+                  <div className="space-y-4">
+                    <div className="px-3 py-2 text-xs font-black uppercase tracking-[0.2em] text-primary/80">
+                      {link.label} Suite
+                    </div>
+                    {categories.map((category) => (
+                      <div key={category} className="space-y-2">
+                        <div className="px-3 py-1 flex items-center gap-2">
+                          {categoryIcons[category] && (() => {
+                            const Icon = categoryIcons[category]
+                            return <Icon className="h-3 w-3 text-muted-foreground/50" />
+                          })()}
+                          <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/40">{category}</span>
+                        </div>
+                        {calculators
+                          .filter((c) => c.category === category)
+                          .map((calc) => (
+                            <button
+                              key={calc.id}
+                              onClick={() => handleCalculatorSelect(calc.id)}
+                              className={cn(
+                                "flex w-full items-center justify-between rounded-xl px-3 py-3 text-left transition-all",
+                                selectedCalculator === calc.id
+                                  ? "bg-primary/10 text-primary font-bold"
+                                  : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
+                              )}
+                            >
+                              <span className="text-sm font-medium">{calc.name}</span>
+                            </button>
+                          ))}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <Link
+                    href={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={cn(
+                      "block rounded-xl px-3 py-3 text-base font-bold transition-all",
+                      isActive(link.href)
+                        ? "bg-primary/10 text-primary"
+                        : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
                 )}
-              >
-                {link.label}
-              </Link>
+              </div>
             ))}
           </div>
         </div>
       )}
-    </header>
+    </nav>
   )
 }

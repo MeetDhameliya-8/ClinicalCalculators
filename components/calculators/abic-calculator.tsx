@@ -89,65 +89,63 @@ export function ABICCalculator() {
     <CalculatorContainer
       title="ABIC Score"
       description="Age-Bilirubin-INR-Creatinine score for predicting survival in alcoholic hepatitis."
-      onCalculate={() => {}} // No-op for reactivity
+      onCalculate={() => {}} 
       onReset={() => {}}
       isValid={true}
       hasResult={true}
-      // formula="ABIC = (age × 0.1) + (bilirubin × 0.08) + (INR × 0.8) + (creatinine × 0.3)"
-    >
-      <div className="space-y-6">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <InputField
-            id="age"
-            label="Age"
-            value={inputs.age}
-            onChange={(v) => handleInputChange("age", String(v))}
-            min={18}
-            max={100}
-            unit="years"
-          />
-
-          <InputField
-            id="bilirubin"
-            label="Total Bilirubin"
-            value={inputs.bilirubin}
-            onChange={(v) => handleInputChange("bilirubin", String(v))}
-            min={0.1}
-            max={50}
-            step={0.1}
-            unit="mg/dL"
-          />
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          <InputField
-            id="inr"
-            label="INR"
-            value={inputs.inr}
-            onChange={(v) => handleInputChange("inr", String(v))}
-            min={0.5}
-            max={10}
-            step={0.1}
-          />
-
-          <InputField
-            id="creatinine"
-            label="Creatinine"
-            value={inputs.creatinine}
-            onChange={(v) => handleInputChange("creatinine", String(v))}
-            min={0.1}
-            max={15}
-            step={0.1}
-            unit="mg/dL"
-          />
-        </div>
-
+      result={
         <ResultCard
-          title="ABIC Score"
           score={parseFloat(result.score.toFixed(2))}
           interpretation={result.interpretation}
           severity={result.severity}
           severityLabel={result.riskCategory}
+          details={[
+            { label: "Survival (90d)", value: result.survival }
+          ]}
+        />
+      }
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
+        <InputField
+          id="age"
+          label="Age"
+          value={inputs.age}
+          onChange={(v) => handleInputChange("age", v)}
+          min={18}
+          max={100}
+          unit="years"
+        />
+
+        <InputField
+          id="bilirubin"
+          label="Total Bilirubin"
+          value={inputs.bilirubin}
+          onChange={(v) => handleInputChange("bilirubin", v)}
+          min={0.1}
+          max={50}
+          step={0.1}
+          unit="mg/dL"
+        />
+
+        <InputField
+          id="inr"
+          label="INR"
+          value={inputs.inr}
+          onChange={(v) => handleInputChange("inr", v)}
+          min={0.5}
+          max={10}
+          step={0.1}
+        />
+
+        <InputField
+          id="creatinine"
+          label="Creatinine"
+          value={inputs.creatinine}
+          onChange={(v) => handleInputChange("creatinine", v)}
+          min={0.1}
+          max={15}
+          step={0.1}
+          unit="mg/dL"
         />
       </div>
     </CalculatorContainer>

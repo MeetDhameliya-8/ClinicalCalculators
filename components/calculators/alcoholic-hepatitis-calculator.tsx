@@ -211,15 +211,38 @@ export function AlcoholicHepatitisCalculator() {
       onReset={() => {}}
       isValid={true}
       hasResult={true}
-      // formula="Enter values once to calculate all three scores"
+      result={
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
+          <ResultCard
+            score={parseFloat(maddreyResult.score.toFixed(1))}
+            interpretation={maddreyResult.interpretation}
+            severity={maddreyResult.severity}
+            severityLabel={`Maddrey's: ${maddreyResult.severityLabel}`}
+          />
+
+          <ResultCard
+            score={glasgowResult.score}
+            interpretation={glasgowResult.interpretation}
+            severity={glasgowResult.severity}
+            severityLabel={`Glasgow: ${glasgowResult.severityLabel}`}
+          />
+
+          <ResultCard
+            score={parseFloat(abicResult.score.toFixed(2))}
+            interpretation={abicResult.interpretation}
+            severity={abicResult.severity}
+            severityLabel={`ABIC: ${abicResult.riskCategory}`}
+          />
+        </div>
+      }
     >
       <div className="space-y-6">
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
           <InputField
             id="age"
             label="Age"
             value={inputs.age}
-            onChange={(v) => handleInputChange("age", String(v))}
+            onChange={(v) => handleInputChange("age", v)}
             min={18}
             max={100}
             unit="years"
@@ -229,20 +252,18 @@ export function AlcoholicHepatitisCalculator() {
             id="bilirubin"
             label="Total Bilirubin"
             value={inputs.bilirubin}
-            onChange={(v) => handleInputChange("bilirubin", String(v))}
+            onChange={(v) => handleInputChange("bilirubin", v)}
             min={0.1}
             max={50}
             step={0.1}
             unit="mg/dL"
           />
-        </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
           <InputField
             id="pt"
             label="PT (Patient)"
             value={inputs.pt}
-            onChange={(v) => handleInputChange("pt", String(v))}
+            onChange={(v) => handleInputChange("pt", v)}
             min={10}
             max={50}
             unit="seconds"
@@ -252,19 +273,17 @@ export function AlcoholicHepatitisCalculator() {
             id="controlPt"
             label="PT (Control)"
             value={inputs.controlPt}
-            onChange={(v) => handleInputChange("controlPt", String(v))}
+            onChange={(v) => handleInputChange("controlPt", v)}
             min={10}
             max={15}
             unit="seconds"
           />
-        </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
           <InputField
             id="inr"
             label="INR"
             value={inputs.inr}
-            onChange={(v) => handleInputChange("inr", String(v))}
+            onChange={(v) => handleInputChange("inr", v)}
             min={0.5}
             max={10}
             step={0.1}
@@ -274,20 +293,18 @@ export function AlcoholicHepatitisCalculator() {
             id="creatinine"
             label="Creatinine"
             value={inputs.creatinine}
-            onChange={(v) => handleInputChange("creatinine", String(v))}
+            onChange={(v) => handleInputChange("creatinine", v)}
             min={0.1}
             max={15}
             step={0.1}
             unit="mg/dL"
           />
-        </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
           <InputField
             id="wbc"
             label="WBC"
             value={inputs.wbc}
-            onChange={(v) => handleInputChange("wbc", String(v))}
+            onChange={(v) => handleInputChange("wbc", v)}
             min={1}
             max={50}
             step={0.1}
@@ -298,39 +315,12 @@ export function AlcoholicHepatitisCalculator() {
             id="bun"
             label="BUN"
             value={inputs.bun}
-            onChange={(v) => handleInputChange("bun", String(v))}
+            onChange={(v) => handleInputChange("bun", v)}
             min={1}
             max={150}
             unit="mg/dL"
           />
         </div>
-
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full">
-          <ResultCard
-            title="Maddrey's DF"
-            score={parseFloat(maddreyResult.score.toFixed(1))}
-            interpretation={maddreyResult.interpretation}
-            severity={maddreyResult.severity}
-            severityLabel={maddreyResult.severityLabel}
-          />
-
-          <ResultCard
-            title="Glasgow AH Score"
-            score={glasgowResult.score}
-            interpretation={glasgowResult.interpretation}
-            severity={glasgowResult.severity}
-            severityLabel={glasgowResult.severityLabel}
-          />
-
-          <ResultCard
-            title="ABIC Score"
-            score={parseFloat(abicResult.score.toFixed(2))}
-            interpretation={abicResult.interpretation}
-            severity={abicResult.severity}
-            severityLabel={abicResult.riskCategory}
-          />
-        </div>
-
         <Card className="border-primary/20 bg-primary/5">
           <CardHeader className="pb-2">
             <CardTitle className="text-base text-primary">Treatment Recommendation</CardTitle>
