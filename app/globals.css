@@ -4,6 +4,10 @@
 @theme {
   --color-background: oklch(0.12 0.02 260);
   --color-foreground: oklch(0.98 0 0);
+
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-mono-serif, monospace;
+  --font-serif: var(--font-serif), ui-serif, Georgia, serif;
   
   --color-card: oklch(0.16 0.03 260);
   --color-card-foreground: oklch(0.98 0 0);
