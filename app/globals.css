@@ -2,37 +2,37 @@
 @plugin "tailwindcss-animate";
 
 @theme {
-  --color-background: oklch(0.12 0.02 260);
-  --color-foreground: oklch(0.98 0 0);
+  --color-background: #e7e9d8;
+  --color-foreground: #03695e;
 
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-mono-serif, monospace;
   --font-serif: var(--font-serif), ui-serif, Georgia, serif;
   
-  --color-card: oklch(0.16 0.03 260);
-  --color-card-foreground: oklch(0.98 0 0);
+  --color-card: #f1f3e8; /* Slightly lighter than background */
+  --color-card-foreground: #03695e;
   
-  --color-popover: oklch(0.14 0.03 260);
-  --color-popover-foreground: oklch(0.98 0 0);
+  --color-popover: #ffffff;
+  --color-popover-foreground: #03695e;
   
-  --color-primary: oklch(0.88 0.22 135);
-  --color-primary-foreground: oklch(0.15 0.02 135);
+  --color-primary: #03695e;
+  --color-primary-foreground: #ffffff;
   
-  --color-secondary: oklch(0.25 0.04 260);
-  --color-secondary-foreground: oklch(0.98 0 0);
+  --color-secondary: #239dca;
+  --color-secondary-foreground: #ffffff;
   
-  --color-muted: oklch(0.2 0.03 260);
-  --color-muted-foreground: oklch(0.7 0.02 260);
+  --color-muted: #d9dbca;
+  --color-muted-foreground: #6daf5f;
   
-  --color-accent: oklch(0.88 0.22 135 / 0.15);
-  --color-accent-foreground: oklch(0.88 0.22 135);
+  --color-accent: #a5c6db;
+  --color-accent-foreground: #239dca;
   
-  --color-destructive: oklch(0.55 0.18 25);
-  --color-destructive-foreground: oklch(0.98 0 0);
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
   
-  --color-border: oklch(0.22 0.04 260);
-  --color-input: oklch(0.18 0.04 260);
-  --color-ring: oklch(0.88 0.22 135);
+  --color-border: #a5c6db;
+  --color-input: #a5c6db;
+  --color-ring: #03695e;
 
   --radius-sm: 0.5rem;
   --radius-md: 1rem;
@@ -73,12 +73,16 @@
 }
 
 @layer components {
-  .glass-panel {
-    @apply bg-card/40 backdrop-blur-xl border border-white/10 shadow-2xl;
+  .bg-primary-gradient {
+    background: linear-gradient(135deg, #03695e 0%, #6daf5f 100%);
   }
   
-  .neon-glow {
-    @apply shadow-[0_0_20px_rgba(163,255,18,0.3)];
+  .bg-secondary-gradient {
+    background: linear-gradient(135deg, #239dca 0%, #a5c6db 100%);
+  }
+
+  .medical-card {
+    @apply bg-card/60 backdrop-blur-md border border-accent/30 shadow-lg rounded-2xl transition-all duration-300;
   }
 }
 

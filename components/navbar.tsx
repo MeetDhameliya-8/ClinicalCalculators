@@ -61,15 +61,15 @@ export function Navbar({ selectedCalculator, onSelectCalculator }: NavbarProps) 
   return (
     <nav className="fixed top-0 z-50 w-full transition-all">
       <div className="mx-auto max-w-7xl px-6 py-4">
-        {/* Main Navbar Pill */}
-        <div className="flex h-14 items-center justify-between rounded-full border border-white/10 bg-background/40 backdrop-blur-xl px-6 shadow-2xl">
+        {/* Main Navbar Pill - Full Opacity, No Blur */}
+        <div className="flex h-14 items-center justify-between rounded-full border border-accent/40 bg-white px-6 shadow-xl">
           {/* Left: Logo */}
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-90">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/20">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary-gradient text-white shadow-lg shadow-primary/20">
                 <Activity className="h-5 w-5" />
               </div>
-              <span className="text-xl font-black tracking-tighter text-foreground">GastroAGI</span>
+              <span className="text-xl font-black tracking-tighter text-primary">GastroAGI</span>
             </Link>
           </div>
 
@@ -83,14 +83,14 @@ export function Navbar({ selectedCalculator, onSelectCalculator }: NavbarProps) 
                     className={cn(
                       "group flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-bold tracking-tight transition-all active:scale-95",
                       isActive(link.href) || isMegaMenuOpen
-                        ? "text-primary bg-primary/10"
-                        : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                        ? "text-primary bg-primary/5"
+                        : "text-muted-foreground hover:text-primary hover:bg-primary/5"
                     )}
                   >
                     {link.label}
                     <ChevronDown className={cn(
                       "h-4 w-4 transition-transform duration-300",
-                      isMegaMenuOpen ? "rotate-180 text-primary" : "text-muted-foreground group-hover:text-foreground"
+                      isMegaMenuOpen ? "rotate-180 text-primary" : "text-muted-foreground group-hover:text-primary"
                     )} />
                   </button>
                 ) : (
@@ -99,8 +99,8 @@ export function Navbar({ selectedCalculator, onSelectCalculator }: NavbarProps) 
                     className={cn(
                       "rounded-full px-4 py-2 text-sm font-bold tracking-tight transition-all active:scale-95",
                       isActive(link.href)
-                        ? "text-primary bg-primary/10"
-                        : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                        ? "text-primary bg-primary/5"
+                        : "text-muted-foreground hover:text-primary hover:bg-primary/5"
                     )}
                   >
                     {link.label}
@@ -113,7 +113,7 @@ export function Navbar({ selectedCalculator, onSelectCalculator }: NavbarProps) 
           {/* Right: CTA Button */}
           <div className="flex items-center gap-4">
             <Link href="/calculator">
-              <button className="hidden sm:block rounded-full bg-white px-6 py-2.5 text-sm font-black text-black hover:bg-white/90 active:scale-95 transition-all shadow-xl shadow-white/10">
+              <button className="hidden sm:block rounded-full bg-primary-gradient px-6 py-2.5 text-sm font-black text-white hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-primary/20">
                 Launch App
               </button>
             </Link>
@@ -121,7 +121,7 @@ export function Navbar({ selectedCalculator, onSelectCalculator }: NavbarProps) 
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex items-center justify-center rounded-xl p-2 text-muted-foreground hover:bg-white/5 hover:text-foreground md:hidden"
+              className="inline-flex items-center justify-center rounded-xl p-2 text-muted-foreground hover:bg-primary/5 hover:text-primary md:hidden"
             >
               {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>

@@ -92,20 +92,22 @@ function CalculatorContent() {
           "w-full mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700",
           selectedCalculator.endsWith("-combined") ? "max-w-6xl" : "max-w-[760px]"
         )}>
-          {CalculatorComponent ? (
-            <CalculatorComponent />
-          ) : (
-            <div className="rounded-3xl border border-white/5 bg-card/40 backdrop-blur-md p-12 text-center shadow-2xl">
-              <p className="text-muted-foreground font-medium">
-                Select a calculator from the menu above to begin.
-              </p>
-            </div>
-          )}
+          <div className="medical-card p-1">
+            {CalculatorComponent ? (
+              <CalculatorComponent />
+            ) : (
+              <div className="p-12 text-center">
+                <p className="text-muted-foreground font-medium">
+                  Select a calculator from the menu above to begin.
+                </p>
+              </div>
+            )}
+          </div>
 
           {/* Disclaimer */}
-          <div className="mt-12 rounded-3xl border border-white/5 bg-white/[0.02] p-8 text-xs text-muted-foreground/60 shadow-xl backdrop-blur-sm">
-            <p className="font-black uppercase tracking-[0.2em] text-primary/80 mb-3">Medical Disclaimer</p>
-            <p className="leading-relaxed">
+          <div className="mt-12 rounded-3xl border border-accent/20 bg-muted/30 p-8 text-xs text-muted-foreground shadow-sm backdrop-blur-sm">
+            <p className="font-black uppercase tracking-[0.2em] text-primary mb-3">Medical Disclaimer</p>
+            <p className="leading-relaxed font-bold">
               These calculators are intended for use by healthcare professionals as a 
               clinical decision support tool. They should not be used as the sole basis 
               for medical decisions. Always use clinical judgment and consider individual 

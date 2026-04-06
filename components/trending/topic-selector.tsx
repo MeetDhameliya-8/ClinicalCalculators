@@ -11,7 +11,7 @@ interface TopicSelectorProps {
 
 export function TopicSelector({ topics, activeTopic, onSelect }: TopicSelectorProps) {
   return (
-    <div className="relative py-4 border-b border-white/5">
+    <div className="relative py-4 border-b border-accent/30">
       <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar scroll-smooth">
         {topics.map((topic) => {
           const isActive = activeTopic === topic
@@ -22,15 +22,15 @@ export function TopicSelector({ topics, activeTopic, onSelect }: TopicSelectorPr
               className={cn(
                 "relative whitespace-nowrap rounded-full px-5 py-2 text-sm font-bold tracking-tight transition-all active:scale-95",
                 isActive 
-                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
-                  : "bg-white/3 text-muted-foreground/60 hover:bg-white/10 hover:text-foreground/90"
+                  ? "text-white shadow-lg shadow-primary/20" 
+                  : "bg-muted/40 text-muted-foreground hover:bg-accent/40 hover:text-primary"
               )}
             >
               <span className="relative z-10">{topic}</span>
               {isActive && (
                 <motion.div
                   layoutId="active-topic-pill"
-                  className="absolute inset-0 rounded-full bg-primary"
+                  className="absolute inset-0 rounded-full bg-primary-gradient"
                   transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                 />
               )}
