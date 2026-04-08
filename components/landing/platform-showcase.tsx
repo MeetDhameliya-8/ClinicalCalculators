@@ -15,13 +15,13 @@ export function PlatformShowcase() {
           className="w-full relative"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[6fr_4fr_3fr] gap-10 lg:gap-16 xl:gap-20 items-center relative">
-            
+
             {/* Left Area: Large vertical visual card */}
             <div className="col-span-1 md:col-span-2 lg:col-span-1 h-[580px] md:h-[680px] lg:h-[720px] rounded-3xl overflow-hidden relative shadow-lg group w-full max-w-[580px] lg:max-w-none aspect-[4/5] mx-auto lg:mx-0">
-              <Image 
-                src="/images/5da293c146555d59c2579587ad3a6456.jpg" 
-                alt="Clinical Intelligence Engine" 
-                fill 
+              <Image
+                src="/images/5da293c146555d59c2579587ad3a6456.jpg"
+                alt="Clinical Intelligence Engine"
+                fill
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                 priority
               />
@@ -47,7 +47,7 @@ export function PlatformShowcase() {
                   Learn More
                 </button>
               </div>
-              
+
               <ul className="space-y-6 lg:space-y-8 mt-auto">
                 <li className="flex items-center gap-4 text-[16px] md:text-[17px] font-medium tracking-tight text-neutral-800">
                   <div className="shrink-0 w-8 h-8 rounded-full border border-neutral-300 flex items-center justify-center text-neutral-500">
@@ -72,7 +72,7 @@ export function PlatformShowcase() {
 
             {/* Right Area: Small floating preview card & Text */}
             <div className="col-span-1 lg:col-span-1 flex flex-col items-center lg:items-end justify-start h-full mt-10 lg:-mt-4 w-full">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -81,20 +81,20 @@ export function PlatformShowcase() {
               >
                 {/* Image Background */}
                 <div className="absolute inset-0 rounded-[2rem] bg-neutral-200/50 overflow-hidden shadow-sm hover:-translate-y-2 transition-transform duration-500">
-                  <Image 
-                    src="/images/0131dc87dc5f814536ade41d7099b739.jpg" 
-                    alt="Structured Knowledge Modules" 
-                    fill 
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" 
+                  <Image
+                    src="/images/0131dc87dc5f814536ade41d7099b739.jpg"
+                    alt="Structured Knowledge Modules"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                   />
                 </div>
-                
+
                 {/* Bottom Left Glass Overlay - Overhanging */}
                 <div className="absolute -bottom-10 -left-4 sm:-bottom-12 sm:-left-6 bg-white/40 backdrop-blur-xl w-[85%] p-5 rounded-[1.25rem] z-30 border border-white/40 shadow-[0_15px_40px_rgb(0,0,0,0.1)] group-hover:-translate-y-2 transition-transform duration-500">
                   <h4 className="font-semibold text-neutral-900 text-[16px] leading-[1.1] tracking-tight">
-                    Good<br/>
-                    interaction<br/>
-                    with other<br/>
+                    Good<br />
+                    interaction<br />
+                    with other<br />
                     molecules
                   </h4>
                   <button className="text-[10px] font-semibold bg-[#8B7FE8] hover:bg-[#796bd4] text-white transition-all px-4 py-1.5 rounded-full w-fit block mt-4 shadow-sm">
@@ -103,7 +103,7 @@ export function PlatformShowcase() {
                 </div>
               </motion.div>
 
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
@@ -111,13 +111,13 @@ export function PlatformShowcase() {
                 className="w-full max-w-[280px] space-y-6 text-[13px] text-neutral-500 font-medium leading-relaxed text-left lg:-mr-4 xl:-mr-8 pr-4"
               >
                 <p>
-                  We are at the forefront of personalized health, offering unparalleled diagnostic capabilities.
+                  We are at the forefront of AI-driven gastroenterology, delivering advanced clinical insights powered by large language models.
                 </p>
                 <p>
-                  MYDNA has consistently expanded its reach to cater to the evolving needs of healthcare worldwide.
+                  Our platform continuously evolves to integrate real-time research, supporting clinicians in making faster, evidence-based decisions.
                 </p>
                 <p>
-                  MYDNA excels in the field of oncology research, with accreditation by IAM and CLIA.
+                  We specialize in precision GI care, combining data intelligence with clinical expertise to improve outcomes across global healthcare systems.
                 </p>
               </motion.div>
             </div>

@@ -8,6 +8,7 @@
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-mono-serif, monospace;
   --font-serif: var(--font-serif), ui-serif, Georgia, serif;
+  --font-merriweather: var(--font-merriweather), serif;
   
   --color-card: #f1f3e8; /* Slightly lighter than background */
   --color-card-foreground: #03695e;

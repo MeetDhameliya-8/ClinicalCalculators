@@ -78,7 +78,7 @@ export function CtaSection() {
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </motion.button>
               </Link>
-              
+
               <Link href="/calculator">
                 <motion.button
                   whileHover={{ scale: 1.05 }}

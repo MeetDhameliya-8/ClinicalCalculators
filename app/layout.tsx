@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Playfair_Display } from 'next/font/google'
+import { Geist, Geist_Mono, Playfair_Display, Merriweather } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 const _geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
-const _playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif" });
+const _playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif", weight: ["400", "700"] });
+const _merriweather = Merriweather({ subsets: ["latin"], variable: "--font-merriweather", weight: ["300", "400", "700", "900"] });
 
 export const metadata: Metadata = {
   title: 'GastroAGI Clinical Calculators',
@@ -25,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${_geist.variable} ${_geistMono.variable} ${_playfair.variable} font-sans antialiased bg-background text-foreground`}>
+      <body className={`${_geist.variable} ${_geistMono.variable} ${_playfair.variable} ${_merriweather.variable} font-sans antialiased bg-background text-foreground`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

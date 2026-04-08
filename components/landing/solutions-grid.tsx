@@ -19,7 +19,7 @@ const solutions = [
     description: "Ask complex gastroenterology questions with direct, evidence-based responses.",
     icon: MessageSquare,
     cta: "Talk with AI",
-    href: "/trending",
+    href: "/assistant",
     featured: true
   },
   {
@@ -44,12 +44,12 @@ export function SolutionsGrid() {
   return (
     <section className="py-24 bg-background">
       <div className="max-w-7xl mx-auto px-6">
-        
+
         {/* HEADING SECTION: Inspired by referencing screenshot */}
         <div className="max-w-3xl mb-20 space-y-6">
           <h2 className="text-3xl sm:text-4xl font-sans font-medium text-foreground leading-tight">
-            We are pioneers in <span className="text-primary italic">clinical intelligence</span>, 
-            dedicated to helping gastroenterologists harness the power of artificial intelligence 
+            We are pioneers in <span className="text-primary italic">clinical intelligence</span>,
+            dedicated to helping gastroenterologists harness the power of artificial intelligence
             to drive precision, efficiency, and patient growth.
           </h2>
         </div>
@@ -65,8 +65,8 @@ export function SolutionsGrid() {
               viewport={{ once: true }}
               className={cn(
                 "group relative flex flex-col justify-between min-h-[380px] rounded-[2rem] overflow-hidden transition-all duration-500",
-                item.featured 
-                  ? "bg-primary-gradient shadow-2xl shadow-primary/20 scale-105 z-10" 
+                item.featured
+                  ? "bg-primary-gradient shadow-2xl shadow-primary/20 scale-105 z-10"
                   : "bg-white border border-primary/10 shadow-sm hover:shadow-xl hover:border-primary/20"
               )}
             >
@@ -78,7 +78,7 @@ export function SolutionsGrid() {
                 )}>
                   <item.icon className="h-6 w-6" />
                 </div>
-                
+
                 <h3 className={cn(
                   "text-2xl font-sans font-medium leading-tight",
                   item.featured ? "text-white" : "text-primary"
@@ -91,8 +91,8 @@ export function SolutionsGrid() {
               <Link href={item.href} className="mt-auto">
                 <div className={cn(
                   "px-8 py-5 border-t flex items-center justify-between transition-colors",
-                  item.featured 
-                    ? "border-white/10 bg-black/10 hover:bg-black/20 text-white" 
+                  item.featured
+                    ? "border-white/10 bg-black/10 hover:bg-black/20 text-white"
                     : "border-primary/5 bg-primary/5 hover:bg-primary/10 text-primary"
                 )}>
                   <span className="text-xs font-black uppercase tracking-widest">{item.cta}</span>

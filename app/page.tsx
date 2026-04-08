@@ -20,6 +20,7 @@ export default function LandingPage() {
         <AuthoritySection /> {/* Added the academic authority section */}
         <AnatomySection /> {/* Injected the premium anatomy atlas */}
         <EvidenceSection /> {/* Editorial Table for Clinical Updates */}
+        
         <PlatformShowcase /> {/* Premium SaaS platform showcase */}
       </main>
 
