@@ -62,17 +62,37 @@ export function AuthoritySection() {
           {/* Right Column: Institutional Headline + Narrative Stack (52% Width) */}
           <div className="space-y-12">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-sans font-extrabold tracking-[-0.03em] leading-none text-primary uppercase drop-shadow-sm wrap-break-word whitespace-normal">
-              Built to keep <br className="hidden lg:block" />
-              gastroenterology <br className="hidden lg:block" />
-              practice aligned <br className="hidden lg:block" />
-              with evidence.
+              {[
+                "Built to keep",
+                "gastroenterology",
+                "practice aligned",
+                "with evidence."
+              ].map((line, i) => (
+                <span key={i} className="block overflow-hidden relative pb-[0.1em] mb-[-0.1em]">
+                  <motion.span 
+                    initial={{ y: "110%" }} 
+                    whileInView={{ y: 0 }} 
+                    transition={{ duration: 0.9, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }} 
+                    viewport={{ once: true }} 
+                    className="block leading-none"
+                  >
+                    {line}
+                  </motion.span>
+                </span>
+              ))}
             </h2>
             
-            <p className="text-lg sm:text-xl font-sans font-medium text-muted-foreground/80 leading-relaxed max-w-2xl">
+            <motion.p 
+              initial={{ y: 30, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true }}
+              className="text-lg sm:text-xl font-sans font-medium text-muted-foreground/80 leading-relaxed max-w-2xl"
+            >
               GastroAGI integrates the latest gastroenterology journals, guideline-based recommendations, 
               GI-focused AI reasoning, and evidence-based clinical tools — helping clinicians 
               translate research into confident real-world decisions.
-            </p>
+            </motion.p>
           </div>
         </div>
 

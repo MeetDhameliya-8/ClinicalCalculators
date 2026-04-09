@@ -1,9 +1,11 @@
 "use client"
 
-import { motion, Variants } from "framer-motion"
+import { motion, Variants, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { ArrowRight, Activity } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { MouseEvent } from "react"
+import { HeroFluidOverlay } from "./hero-fluid-overlay"
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -28,25 +30,31 @@ const itemVariants: Variants = {
   },
 }
 
-const imageVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.9, x: 50 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    x: 0,
-    transition: { 
-      duration: 1.2, 
-      ease: [0.16, 1, 0.3, 1],
-      delay: 0.4
-    },
-  },
-}
-
 export function HeroSection() {
+  // Mouse tracking for parallax on background image
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const springConfig = { stiffness: 40, damping: 30 }
+  const smoothX = useSpring(mouseX, springConfig)
+  const smoothY = useSpring(mouseY, springConfig)
+  const backgroundX = useTransform(smoothX, [0, 1920], [5, -5])
+  const backgroundY = useTransform(smoothY, [0, 1080], [5, -5])
+
+  const handleMouseMove = (e: MouseEvent) => {
+    mouseX.set(e.clientX)
+    mouseY.set(e.clientY)
+  }
+
   return (
-    <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-primary-gradient">
-      {/* 1. DYNAMIC BACKGROUND IMAGE (Full Scale, Right-Aligned) */}
-      <div className="absolute inset-0 z-0 select-none pointer-events-none">
+    <section 
+      onMouseMove={handleMouseMove}
+      className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-primary-gradient"
+    >
+      {/* LAYER 0: Background image with parallax */}
+      <motion.div 
+        style={{ x: backgroundX, y: backgroundY }}
+        className="absolute inset-0 z-0 select-none pointer-events-none"
+      >
         <Image
           src="/hero/background.png"
           alt="Clinical Background"
@@ -58,11 +66,16 @@ export function HeroSection() {
             target.src = "https://images.unsplash.com/photo-1576091160550-217359f4ecf8?auto=format&fit=crop&q=80";
           }}
         />
-        {/* Subtle Side Fade to ensure text contrast on the left */}
+        {/* Left fade for text contrast */}
         <div className="absolute inset-0 bg-linear-to-r from-primary-gradient via-primary-gradient/70 to-transparent" />
-      </div>
-      
+      </motion.div>
+
+      {/* LAYER 1: Canvas fluid gradient overlay (above image, below text) */}
+      <HeroFluidOverlay />
+
+      {/* LAYER 2: Text content */}
       <div className="relative z-10 w-full max-w-7xl px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-screen pt-48 lg:pt-32 pb-24">
+
         
         {/* LEFT COLUMN: Clinical Messaging */}
         <motion.div
@@ -126,3 +139,4 @@ export function HeroSection() {
     </section>
   )
 }
+

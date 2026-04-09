@@ -3,6 +3,8 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { ArrowRight, ArrowUpRight, Search, Volume2 } from "lucide-react"
+import { PremiumHeroText } from "./premium-hero-text"
+
 export function PlatformShowcase() {
   return (
     <section className="py-28 md:py-36 bg-white relative">
@@ -39,13 +41,17 @@ export function PlatformShowcase() {
 
             {/* Center Area: Short content block */}
             <div className="col-span-1 lg:col-span-1 lg:pl-6 xl:pl-10 flex flex-col justify-between h-full z-10 w-full py-6 md:py-8 lg:py-6 relative">
-              <div className="mb-10 lg:mb-16 mt-2 max-w-[280px]">
+              <div className="mt-2 max-w-[280px]">
                 <p className="text-[13px] text-neutral-800 font-medium leading-relaxed mb-5">
                   Driven by a rich history of expertise and a relentless pursuit of scientific excellence
                 </p>
                 <button className="bg-black hover:bg-neutral-800 text-white rounded-full px-7 py-2.5 text-[11px] font-bold tracking-widest transition-all shadow-md hover:-translate-y-0.5 w-fit uppercase">
                   Learn More
                 </button>
+              </div>
+
+              <div className="my-auto py-10 w-full max-w-[380px]">
+                <PremiumHeroText />
               </div>
 
               <ul className="space-y-6 lg:space-y-8 mt-auto">
