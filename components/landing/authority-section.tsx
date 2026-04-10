@@ -29,8 +29,20 @@ const authorityBlocks = [
 
 export function AuthoritySection() {
   return (
-    <section className="py-32 bg-[#f4f5f0] overflow-hidden border-y border-primary/5">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+    <section className="py-32 bg-[#F8F9F5] overflow-hidden relative border-y border-primary/5">
+      {/* Decorative SVG Pattern Background - Institutional Texture */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="authority-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r="1" fill="#1A5653" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#authority-grid)" />
+        </svg>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         
         {/* TOP ROW: High-Impact Medical Poster Layout (48/52 Split) */}
         <div className="grid grid-cols-1 lg:grid-cols-[48fr_52fr] gap-12 lg:gap-16 items-center mb-32">
@@ -61,66 +73,84 @@ export function AuthoritySection() {
 
           {/* Right Column: Institutional Headline + Narrative Stack (52% Width) */}
           <div className="space-y-12">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-sans font-extrabold tracking-[-0.03em] leading-none text-primary uppercase drop-shadow-sm wrap-break-word whitespace-normal">
-              {[
-                "Built to keep",
-                "gastroenterology",
-                "practice aligned",
-                "with evidence."
-              ].map((line, i) => (
-                <span key={i} className="block overflow-hidden relative pb-[0.1em] mb-[-0.1em]">
-                  <motion.span 
-                    initial={{ y: "110%" }} 
-                    whileInView={{ y: 0 }} 
-                    transition={{ duration: 0.9, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }} 
-                    viewport={{ once: true }} 
-                    className="block leading-none"
-                  >
-                    {line}
-                  </motion.span>
+            <h2 className="text-4xl sm:text-5xl lg:text-7xl font-sans font-semibold tracking-[-0.04em] leading-[1] text-[#08313A] uppercase">
+              <motion.span 
+                initial={{ opacity: 0, y: 30 }} 
+                whileInView={{ opacity: 1, y: 0 }} 
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }} 
+                viewport={{ once: true }} 
+                className="block"
+              >
+                Built to align<br />
+                clinical practice<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1A5653] to-[#5CD85A]">
+                  with evidence.
                 </span>
-              ))}
+              </motion.span>
             </h2>
             
-            <motion.p 
+            <motion.div 
               initial={{ y: 30, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
               viewport={{ once: true }}
-              className="text-lg sm:text-xl font-sans font-medium text-muted-foreground/80 leading-relaxed max-w-2xl"
+              className="space-y-6"
             >
-              GastroAGI integrates the latest gastroenterology journals, guideline-based recommendations, 
-              GI-focused AI reasoning, and evidence-based clinical tools — helping clinicians 
-              translate research into confident real-world decisions.
-            </motion.p>
+              <p className="text-xl sm:text-2xl italic font-serif text-[#107869]/80 leading-relaxed max-w-2xl">
+                "Transforming fragmented clinical research into structured, high-precision decision pathways."
+              </p>
+              <div className="h-px w-24 bg-gradient-to-r from-[#1A5653] to-transparent" />
+              <p className="text-lg font-sans font-medium text-gray-500 leading-relaxed max-w-xl">
+                GastroAGI unifies the latest journals, society guidelines, and GI-focused AI to help clinicians make the most informed decisions at the point of care.
+              </p>
+            </motion.div>
           </div>
         </div>
 
         {/* BOTTOM GRID: Authority Content Blocks */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-24 border-t border-primary/10 pt-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-24 border-t border-gray-100 pt-24">
           {authorityBlocks.map((block, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1, duration: 0.8 }}
+              transition={{ delay: idx * 0.15, duration: 1, ease: [0.22, 1, 0.36, 1] }}
               viewport={{ once: true }}
-              className="space-y-6 group"
+              className="relative group space-y-6"
             >
-              {/* Massive Metric-Style Header */}
-              <div className="flex items-baseline gap-4">
-                <span className="text-5xl sm:text-6xl lg:text-7xl font-sans font-extrabold text-primary/10 group-hover:text-primary/20 transition-colors duration-500">
-                  0{idx + 1}
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-sans font-extrabold tracking-tight text-primary uppercase">
+              {/* Background Glow on Hover */}
+              <div className="absolute -inset-4 bg-white/0 group-hover:bg-white/100 rounded-[2rem] transition-all duration-700 -z-10 shadow-[0_20px_50px_rgba(0,0,0,0.04)]" />
+
+              {/* Number Overlay - premium outline style */}
+              <div className="flex items-center gap-8 group-hover:translate-x-2 transition-transform duration-700">
+                <div className="relative">
+                  <span className="text-7xl sm:text-8xl font-sans font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-gray-200 to-transparent select-none">
+                    0{idx + 1}
+                  </span>
+                  {/* Thin animated line below number */}
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "100%" }}
+                    transition={{ delay: 1 + idx * 0.2, duration: 1.5 }}
+                    className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-[#5CD85A] to-transparent opacity-40" 
+                  />
+                </div>
+                
+                <h3 className="text-2xl sm:text-3xl font-sans font-semibold tracking-tight text-[#08313A] uppercase leading-none">
                   {block.title}
                 </h3>
               </div>
 
-              {/* Authority Description */}
-              <p className="text-base sm:text-lg font-sans font-medium text-muted-foreground/70 leading-relaxed pl-4 border-l-2 border-primary/10 group-hover:border-primary/40 transition-colors">
-                {block.description}
-              </p>
+              {/* Authority Description with customized border */}
+              <div className="pl-6 space-y-4">
+                <p className="text-lg font-sans font-medium text-[#1A5653]/70 leading-relaxed">
+                  {block.description}
+                </p>
+                <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                   <div className="h-0.5 w-8 bg-[#5CD85A]" />
+                   <span className="text-[10px] font-black uppercase tracking-widest text-[#107869]">Enhanced Evidence</span>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>

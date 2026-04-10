@@ -18,8 +18,8 @@ export function PlatformShowcase() {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[6fr_4fr_3fr] gap-10 lg:gap-16 xl:gap-20 items-center relative">
 
-            {/* Left Area: Large vertical visual card */}
-            <div className="col-span-1 md:col-span-2 lg:col-span-1 h-[580px] md:h-[680px] lg:h-[720px] rounded-3xl overflow-hidden relative shadow-lg group w-full max-w-[580px] lg:max-w-none aspect-[4/5] mx-auto lg:mx-0">
+            {/* Left Area: Large visual card */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-1 h-auto rounded-[3rem] overflow-hidden relative shadow-lg group w-full max-w-[580px] lg:max-w-none aspect-[4/5] mx-auto lg:mx-0">
               <Image
                 src="/images/5da293c146555d59c2579587ad3a6456.jpg"
                 alt="Clinical Intelligence Engine"
@@ -28,7 +28,7 @@ export function PlatformShowcase() {
                 priority
               />
               <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 transition-transform duration-300 group-hover:-translate-y-1 w-max max-w-[90%]">
-                <div className="bg-white/95 backdrop-blur-sm rounded-full px-5 py-3 shadow-md">
+                <div className="bg-white/40 backdrop-blur-md rounded-full px-5 py-3 shadow-md border border-white/40">
                   <span className="font-medium text-neutral-900 text-[15px]">
                     Clinical Intelligence Engine
                   </span>
@@ -83,10 +83,10 @@ export function PlatformShowcase() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                className="w-full max-w-[280px] aspect-[4/5] relative z-20 group mb-14 sm:mb-20 lg:-mr-4 xl:-mr-8"
+                className="w-full max-w-[280px] aspect-square relative z-20 group mb-14 sm:mb-20 lg:-mr-4 xl:-mr-8"
               >
                 {/* Image Background */}
-                <div className="absolute inset-0 rounded-[2rem] bg-neutral-200/50 overflow-hidden shadow-sm hover:-translate-y-2 transition-transform duration-500">
+                <div className="absolute inset-0 rounded-[3rem] bg-neutral-200/50 overflow-hidden shadow-sm hover:-translate-y-2 transition-transform duration-500">
                   <Image
                     src="/images/0131dc87dc5f814536ade41d7099b739.jpg"
                     alt="Structured Knowledge Modules"

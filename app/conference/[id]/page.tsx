@@ -1,7 +1,7 @@
 "use client"
 
 import { use } from "react"
-import { conferenceArticles, ConferenceArticle } from " @/lib/conference-data"
+import { conferenceArticles, ConferenceArticle } from "@/lib/conference-data"
 import { ArticleLayout } from "@/components/editorial/article-layout"
 import { notFound } from "next/navigation"
 

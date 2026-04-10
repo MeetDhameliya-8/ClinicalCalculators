@@ -56,7 +56,7 @@ export function HeroSection() {
         className="absolute inset-0 z-0 select-none pointer-events-none"
       >
         <Image
-          src="/hero/background.png"
+          src="/hero/background.jpg"
           alt="Clinical Background"
           fill
           priority

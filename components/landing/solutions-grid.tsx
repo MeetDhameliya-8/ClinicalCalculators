@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Activity, MessageSquare, BookOpen, CheckCircle, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { JournalMarquee } from "./journal-marquee"
 
 const solutions = [
   {
@@ -54,7 +55,7 @@ const solutions = [
 
 export function SolutionsGrid() {
   return (
-    <section className="py-24 bg-background">
+    <section className="pt-24 pb-0 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* HEADING SECTION: Inspired by referencing screenshot */}
@@ -109,6 +110,11 @@ export function SolutionsGrid() {
             </motion.div>
           ))}
         </div>
+      </div>
+
+      {/* Integrated Marquee Belt */}
+      <div className="mt-20">
+        <JournalMarquee />
       </div>
     </section>
   )
