@@ -1,7 +1,96 @@
 "use client";
 
-import { TypewriterText } from "./typewriter-text";
+import { useInView } from "framer-motion";
 import { motion } from "framer-motion";
+import { useRef } from "react";
+
+// ── Key-phrase highlight config ─────────────────────────────────────────────
+const KEY_PHRASES: string[] = [
+  "IBD",
+  "hepatology",
+  "GI oncology",
+  "gallbladder disease",
+  "esophageal and gastric disorders",
+  "LLM reasoning",
+  "evidence-backed clinical insights",
+];
+
+/**
+ * Splits `text` into alternating plain / highlight segments, then renders each
+ * highlight span with a staggered fade-to-teal animation once the paragraph
+ * enters the viewport.  Plain text fades in as a single block first.
+ */
+function HighlightParagraph({
+  text,
+  className = "",
+}: {
+  text: string;
+  className?: string;
+}) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  // Build segments: { value, isKey, keyIndex }
+  type Segment = { value: string; isKey: boolean; keyIndex: number };
+  const segments: Segment[] = [];
+  let remaining = text;
+  let keyHitCount = 0;
+
+  while (remaining.length > 0) {
+    let earliest: { idx: number; phrase: string; keyIndex: number } | null = null;
+    KEY_PHRASES.forEach((phrase, ki) => {
+      const pos = remaining.indexOf(phrase);
+      if (pos !== -1 && (earliest === null || pos < earliest.idx)) {
+        earliest = { idx: pos, phrase, keyIndex: ki };
+      }
+    });
+    if (!earliest) {
+      segments.push({ value: remaining, isKey: false, keyIndex: -1 });
+      break;
+    }
+    const { idx, phrase, keyIndex } = earliest as { idx: number; phrase: string; keyIndex: number };
+    if (idx > 0) segments.push({ value: remaining.slice(0, idx), isKey: false, keyIndex: -1 });
+    segments.push({ value: phrase, isKey: true, keyIndex: keyHitCount++ });
+    remaining = remaining.slice(idx + phrase.length);
+  }
+
+  return (
+    <motion.p
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0, y: 10 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.72, ease: "easeOut" }}
+    >
+      {segments.map((seg, i) =>
+        seg.isKey ? (
+          <motion.span
+            key={i}
+            initial={{ color: "inherit", fontWeight: 500 }}
+            animate={
+              isInView
+                ? {
+                    color: "#107869",
+                    fontWeight: 650,
+                    transition: {
+                      delay: 0.85 + seg.keyIndex * 0.32,
+                      duration: 0.55,
+                      ease: "easeOut",
+                    },
+                  }
+                : {}
+            }
+            style={{ display: "inline", textDecoration: "none" }}
+          >
+            {seg.value}
+          </motion.span>
+        ) : (
+          <span key={i}>{seg.value}</span>
+        )
+      )}
+    </motion.p>
+  );
+}
 
 export default function ConnectedIntelligence() {
     return (
@@ -47,10 +136,9 @@ export default function ConnectedIntelligence() {
                     </motion.div>
 
                     <div className="flex-1 flex flex-col items-start gap-5">
-                        <TypewriterText 
+                        <HighlightParagraph
                             text="Bringing together continuously evolving evidence across IBD, hepatology, GI oncology, gallbladder disease, esophageal and gastric disorders, and core scientific research—this system applies advanced LLM reasoning to transform fragmented knowledge into structured, evidence-backed clinical insights, on demand."
-                            className="font-medium text-base md:text-lg leading-relaxed bg-clip-text text-transparent bg-gradient-to-r from-[#1A5653] via-[#107869] via-[#5CD85A] to-[#08313A]"
-                            delay={0.2}
+                            className="font-medium text-base md:text-lg leading-relaxed text-[#1A5653]"
                         />
                         <a
                             href="/tools"

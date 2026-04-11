@@ -107,52 +107,146 @@ export function AuthoritySection() {
           </div>
         </div>
 
-        {/* BOTTOM GRID: Authority Content Blocks */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-24 border-t border-gray-100 pt-24">
-          {authorityBlocks.map((block, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.15, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              viewport={{ once: true }}
-              className="relative group space-y-6"
-            >
-              {/* Background Glow on Hover */}
-              <div className="absolute -inset-4 bg-white/0 group-hover:bg-white/100 rounded-[2rem] transition-all duration-700 -z-10 shadow-[0_20px_50px_rgba(0,0,0,0.04)]" />
+        {/* WORKFLOW TIMELINE: Clinical Intelligence Flow */}
+        <div className="border-t border-gray-100 pt-24">
 
-              {/* Number Overlay - premium outline style */}
-              <div className="flex items-center gap-8 group-hover:translate-x-2 transition-transform duration-700">
-                <div className="relative">
-                  <span className="text-7xl sm:text-8xl font-sans font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-gray-200 to-transparent select-none">
-                    0{idx + 1}
-                  </span>
-                  {/* Thin animated line below number */}
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    whileInView={{ width: "100%" }}
-                    transition={{ delay: 1 + idx * 0.2, duration: 1.5 }}
-                    className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-[#5CD85A] to-transparent opacity-40" 
-                  />
-                </div>
-                
-                <h3 className="text-2xl sm:text-3xl font-sans font-semibold tracking-tight text-[#08313A] uppercase leading-none">
-                  {block.title}
-                </h3>
-              </div>
+          {/* Section label */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/50 mb-16 text-center"
+          >
+            Clinical Intelligence Workflow
+          </motion.p>
 
-              {/* Authority Description with customized border */}
-              <div className="pl-6 space-y-4">
-                <p className="text-lg font-sans font-medium text-[#1A5653]/70 leading-relaxed">
-                  {block.description}
-                </p>
-                <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-                   <div className="h-0.5 w-8 bg-[#5CD85A]" />
-                   <span className="text-[10px] font-black uppercase tracking-widest text-[#107869]">Enhanced Evidence</span>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+          {/* ── DESKTOP: horizontal timeline ── */}
+          <div className="hidden md:block relative">
+
+            {/* Animated connector line (SVG draw) */}
+            <div className="absolute top-[22px] left-[12.5%] right-[12.5%] h-[1px] overflow-visible pointer-events-none">
+              <svg
+                className="w-full h-[1px] overflow-visible"
+                preserveAspectRatio="none"
+                viewBox="0 0 100 1"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <motion.line
+                  x1="0" y1="0.5" x2="100" y2="0.5"
+                  stroke="rgba(26,86,83,0.18)"
+                  strokeWidth="0.4"
+                  strokeDasharray="100"
+                  strokeDashoffset="100"
+                  vectorEffect="non-scaling-stroke"
+                  initial={{ strokeDashoffset: 100 }}
+                  whileInView={{ strokeDashoffset: 0 }}
+                  transition={{ duration: 1.4, ease: "easeInOut", delay: 0.3 }}
+                  viewport={{ once: true }}
+                />
+              </svg>
+            </div>
+
+            {/* Steps */}
+            <div className="grid grid-cols-4 gap-6">
+              {authorityBlocks.map((block, idx) => {
+                const Icon = block.icon
+                return (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 + idx * 0.18, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                    viewport={{ once: true }}
+                    className="flex flex-col items-center text-center group"
+                  >
+                    {/* Node dot with glow */}
+                    <div className="relative mb-7 flex items-center justify-center">
+                      <motion.div
+                        initial={{ scale: 0, opacity: 0 }}
+                        whileInView={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 0.55 + idx * 0.18, duration: 0.5, ease: "backOut" }}
+                        viewport={{ once: true }}
+                        className="relative z-10 w-[10px] h-[10px] rounded-full bg-[#1A5653] shadow-[0_0_0_3px_rgba(26,86,83,0.12)]
+                                   group-hover:shadow-[0_0_0_5px_rgba(92,216,90,0.2),0_0_12px_rgba(92,216,90,0.35)]
+                                   group-hover:bg-[#5CD85A] transition-all duration-500"
+                      />
+                    </div>
+
+                    {/* Icon */}
+                    <div className="mb-4 text-[#107869]/50 group-hover:text-[#107869] transition-colors duration-400">
+                      <Icon size={15} strokeWidth={1.5} />
+                    </div>
+
+                    {/* Title */}
+                    <p className="text-[11px] font-semibold uppercase tracking-widest text-[#08313A] mb-2 leading-tight">
+                      {block.title}
+                    </p>
+
+                    {/* Description */}
+                    <p className="text-[12.5px] font-sans text-[#1A5653]/55 leading-relaxed max-w-[200px]">
+                      {block.description}
+                    </p>
+                  </motion.div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* ── MOBILE: vertical timeline ── */}
+          <div className="flex flex-col md:hidden relative pl-6">
+
+            {/* Vertical connector line */}
+            <div className="absolute left-[10px] top-[10px] bottom-[10px] w-[1px] overflow-hidden">
+              <motion.div
+                className="w-full bg-[#1A5653]/15 origin-top"
+                initial={{ scaleY: 0 }}
+                whileInView={{ scaleY: 1 }}
+                transition={{ duration: 1.4, ease: "easeInOut", delay: 0.3 }}
+                viewport={{ once: true }}
+                style={{ height: "100%" }}
+              />
+            </div>
+
+            {authorityBlocks.map((block, idx) => {
+              const Icon = block.icon
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.4 + idx * 0.18, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  viewport={{ once: true }}
+                  className="relative flex gap-6 pb-12 last:pb-0 group"
+                >
+                  {/* Node dot */}
+                  <div className="absolute -left-6 top-[3px] flex items-center justify-center">
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      transition={{ delay: 0.55 + idx * 0.18, duration: 0.4, ease: "backOut" }}
+                      viewport={{ once: true }}
+                      className="w-[10px] h-[10px] rounded-full bg-[#1A5653] shadow-[0_0_0_3px_rgba(26,86,83,0.12)]
+                                 group-hover:bg-[#5CD85A] group-hover:shadow-[0_0_0_5px_rgba(92,216,90,0.18)] transition-all duration-500"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-[#107869]/55 group-hover:text-[#107869] transition-colors duration-300">
+                      <Icon size={14} strokeWidth={1.5} />
+                    </div>
+                    <p className="text-[11px] font-semibold uppercase tracking-widest text-[#08313A] leading-tight">
+                      {block.title}
+                    </p>
+                    <p className="text-[12.5px] font-sans text-[#1A5653]/55 leading-relaxed">
+                      {block.description}
+                    </p>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+
         </div>
 
       </div>
